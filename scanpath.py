@@ -32,6 +32,7 @@ import os
 from urllib.parse import unquote_plus
 from traceback import print_exc
 from time import strftime, strptime
+from fnmatch import fnmatch
 
 #local modules
 from mypicsdb.pathscanner import Scanner
@@ -184,7 +185,7 @@ class VFSScanner:
 
     def _check_excluded_files(self, filename):
         for ext in common.getaddon_setting("picsexcl").lower().split("|"):
-            if ext in filename.lower() and len(ext)>0:
+            if fnmatch(filename.lower(), ext) and len(ext)>0:
                 common.log("VFSScanner._check_excluded_files", 'Picture "%s" excluded due to exclude condition "%s"'%(filename , common.getaddon_setting("picsexcl")) )
                 return False
 
